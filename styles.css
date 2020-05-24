@@ -50,7 +50,7 @@ body {
     color: #fff;
 }
 
-#title, #Coins, #Ammo, #Armor, #Vanity, #Dye, #Buffs, #Position, #Group, #UserIP {
+#title, #Coins, #Ammo, #Armor, #Vanity, #Dye, #Piggy, #Safe, #Defenders_Forge, #Buffs, #Position, #Group, #UserIP {
     text-shadow: 2px 2px 2px #000;
 }
 
@@ -66,6 +66,10 @@ body {
     top: 0.1em;
 }
 
+#Defenders_Forge #Safe #Piggy{
+    margin-left: 12px;
+    color: #fff;
+}
 #Armor, #Vanity, #Dye {
     margin-right: 4px;
 }
@@ -90,6 +94,31 @@ body {
     clear: right;
 }
 
+#Piggy_Bank_Table {
+    float: left;
+    margin-top: -325px;
+    margin-left: 25px;
+    color: #fff;
+    clear: right;
+    padding: 12px;
+}
+
+#Safe_Table {
+    float: left;
+    margin-top: -50px;
+    margin-left: 25px;
+    color: #fff;
+    clear: right;
+    padding: 12px;
+}
+#DefendersForge_Table {
+    float: left;
+    margin-top: -5px;
+    margin-left: 25px;
+    color: #fff;
+    clear: left;
+    padding: 12px;
+}
 #Buffs {
     clear: both;
     color: #fff;
@@ -134,7 +163,7 @@ td {
 }
 
 /* Item Object Properties */
-#Ammo_table .item, #Coins_table .item {
+#Ammo_table .item, #Coins_table .item{
     font-size: 65%;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -147,7 +176,45 @@ td {
     border-radius: 10px;
     opacity: 0.85;
 }
-
+#Piggy_Bank_Table .item {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 3em;
+    height: 3em;
+    border: solid 1px rgb(114, 58, 93);
+    padding: 5px;
+    background-color: rgb(160, 47, 99);
+    position: relative;
+    border-radius: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+#Safe_Table .item {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 3em;
+    height: 3em;
+    border: solid 1px rgb(66, 66, 66);
+    padding: 5px;
+    background-color: rgb(105, 105, 105);
+    position: relative;
+    border-radius: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+#DefendersForge_Table .item {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 3em;
+    height: 3em;
+    border: solid 1px rgb(126, 139, 0);
+    padding: 5px;
+    background-color: rgb(171, 173, 48);
+    position: relative;
+    border-radius: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+}
 #Ammo_table td .num, #Coins_table td .num {
     position: absolute;
     left: 8px;

@@ -117,18 +117,18 @@ $player['GET'] = str_replace('#', '%23', $player['GET']);
 
 // Grab a token
 // Run the command
-$response = json_decode(@file_get_contents("http://$location/v3/players/read?token=" . $token . '&player=' . $player['GET']), true);
+$response = json_decode(@file_get_contents("http://$location/v4/players/read?token=" . $token . '&player=' . $player['GET']), true);
 
 // If this token is now unusable, get a new one
 if ($response['status'] === "403") {
     $token = getNewToken($rest_user, $rest_pass, $location, $ctx);
-    $response = json_decode(@file_get_contents("http://$location/v3/players/read?token=" . $token . '&player=' . $player['GET']), true);
+    $response = json_decode(@file_get_contents("http://$location/v4/players/read?token=" . $token . '&player=' . $player['GET']), true);
 }
 
 $player['info'] = $response;
 
 // Check player is on server
-if(!isset($player['info']['inventory'])) {
+if(!isset($player['info']['items'])) {
     echo 'Player is not on the server';
 } else {
     $background = $defaultBG;
