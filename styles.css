@@ -50,7 +50,7 @@ body {
     color: #fff;
 }
 
-#title, #Coins, #Ammo, #Armor, #Vanity, #Dye, #Piggy, #Safe, #Defenders_Forge, #Vault, #Equip, #Buffs, #Position, #Group, #UserIP {
+#title, #Coins, #Ammo, #Armor, #Vanity, #Dye, #Piggy, #Safe, #Defenders_Forge, #Vault, #Equip, #Buffs, #Position, #Group, #UserIP, #AccountName, #PlayerName {
     text-shadow: 2px 2px 2px #000;
 }
 
@@ -169,7 +169,7 @@ body {
     opacity: 0.7;
 }
 
-#Position, #Group, #UserIP {
+#Position, #Group, #UserIP, #AccountName, #PlayerName {
     clear: left;
     margin-left: 25px;
     color: #fff;

@@ -159,6 +159,12 @@ foreach($buffs as $buff) {
     }
 }
 $body .= '</div>';
+// Display Player Name
+if ($config['display_playername'])
+    $body .= '<div id="PlayerName">Player Name: <em>' . $player['info']['nickname'] . '</em></div>';
+// Display Account Name
+if ($config['display_accountname'])
+$body .= '<div id="AccountName">Account Name: <em>' . $player['info']['username'] . '</em></div>';
 
 // Display Player Position
 if ($config['display_position'])
