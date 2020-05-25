@@ -11,12 +11,13 @@ if(!defined('index')) exit;
 include_once 'items_array.php';
 
 $body = "";
-$inventory = array_merge($response['items']['inventory'], $response['items']['equipment'], $response['items']['dyes'], $response['items']['piggy'], $response['items']['safe'], $response['items']['forge']);
+$trash = array($response['items']['trash']);
+$inventory = array_merge($response['items']['inventory'], $response['items']['equipment'], $response['items']['dyes'], $response['items']['piggy'], $response['items']['safe'], $response['items']['forge'], $response['items']['vault'], $response['items']['miscEquip'], $response['items']['miscDye'], $trash);
 
 
 $i = 0;
 foreach ($inventory as $item) {
-    if ($i > 208) {//88 dyes // 128 piggy // 168 safe// 208 forge
+    if ($i > 259) {//88 dyes // 128 piggy // 168 safe // 208 forge // 248 vault // 253 equip // 258 miscDyes // 259 trash can slot
 	break;
     }
     if ($item['netID'] !== 0) {
@@ -38,7 +39,7 @@ foreach ($inventory as $item) {
     if ($i % 10 === 0 && $i < 50) {
         $body .= '</tr><tr>';
     }
-    if (($i + 1) % 10 === 0 && $i > 89) {
+    if (($i + 1) % 10 === 0 && $i > 89 && $i < 253) {
         $body .= '</tr><tr>';
     }
 
@@ -67,8 +68,8 @@ foreach ($inventory as $item) {
     }
 
     if($i === 69 || $i === 79) {
-        $body .= '</tr></table></div>'."\n\n".'<div class="stuff_table'.'">';
-        $body .= '<span id="Dye">'.($i === 69 ? 'Social' : 'Dye').'</span><table><tr>';
+        $body .= '</tr></table></div>'."\n\n".'<div class="' . ($i === 79 ? 'stuff_table stuff_tableL' : 'stuff_table') . '">';
+        $body .= '<span id="'. ($i === 69 ? 'Vanity' : 'Dye').'">'.($i === 69 ? 'Vanity' : 'Dye').'</span><table><tr>';
     }
 
     if($i === 89) {
@@ -83,17 +84,47 @@ foreach ($inventory as $item) {
         $body .= '</table></div><div id="DefendersForge_Table">';
         $body .= '<span id="Defenders_Forge">Defender\'s Forge</span><table><tr>';
     }
-    
+    if($i === 209) {
+        $body .= '</table></div><div id="Vault_Table">';
+        $body .= '<span id="Vault">Void Vault</span><table><tr>';
+    }
+    if($i == 249 || $i == 254) {
+        $body .= '</tr></table></div>'."\n\n".'<div id="' . ($i === 249 ? 'Misc_Dye_Tables' : 'Misc_Equip_Tables') . '">';
+        $body .= '<span id="'. ($i === 249 ? 'Equip' : 'Dye').'">'.($i === 249 ? 'Equip' : 'Dye').'</span><table><tr>';
+    }
+    if ($i == 259) {
+        $body .= '</table></div><div id="Trash_Table">';
+        $body .= '<table><tr>';
+    }
     // The last table has only 1 row per table so we close the current row
     // and open a new one here.
-    if($i > 59 && $i < 89) {
+    if($i > 59 && ($i < 89 || $i > 248)) {
         $body .= '</tr><tr>';
     }
 
 
     if ($item['netID'] == 0) {
         if ($i === 58) {
-        } else {
+        } 
+        elseif (($i > 78 && $i < 89) || ($i > 253 && $i < 259)) {
+            $img_tag = '<img title="Dye Slot" src="items_images/Dye_Empty.png"/>';
+            $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
+        }
+        elseif ($i > 71 && $i < 79){
+            $img_tag = '<img title="Vanity Accesory Slot" src="items_images/Vanity_Accesory.png"/>';
+            $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
+        }
+        elseif ($i > 61 && $i < 69) {
+            $img_tag = '<img title="Accesory Slot" src="items_images/Accessory_Slot.png"/>';
+            $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
+            
+        }
+        elseif (($i > 58 && $i < 62) || ($i > 68 && $i < 72) || ($i > 248 && $i < 254) || $i == 259) {
+            $itemFile = str_replace(' ', '_', $slotNames[$i] . '.png');
+            $img_tag = '<img title="'. $slotNames[$i] . ' "src="items_images/' . $itemFile . '"/>';
+            $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
+        }
+        else {
             $body .= '<td><div class="item"><div class="item2"><span class="empty"></span></div>';
             if ($i < 10) {
                 $body .= '<div class="num2">' . ($i < 9 ? $i + 1 : 0) . '</div>';
@@ -107,7 +138,7 @@ foreach ($inventory as $item) {
             $body .= '<div class="num2">' . ($i < 9 ? $i + 1 : 0) . '</div>';
         }
         $body .= '</div>';
-        if (($i < 59 || $i > 88) && $item['stack'] > 1) {
+        if ($item['stack'] > 1) {
             $body .= '<span class="num">' . $item['stack'] . '</span>';
         }
         $body .= "</td>\n";
