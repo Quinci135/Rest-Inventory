@@ -217,7 +217,7 @@ td {
     height: 3em;
     border: solid 1px rgb(114, 58, 93);
     padding: 5px;
-    background-color: rgb(160, 47, 99);
+    background-color: rgba(160, 47, 99, 0.8);
     position: relative;
     border-radius: 10px;
     font-size: 13px;
@@ -230,7 +230,7 @@ td {
     height: 3em;
     border: solid 1px rgb(66, 66, 66);
     padding: 5px;
-    background-color: rgb(105, 105, 105);
+    background-color: rgba(105, 105, 105, 0.8);
     position: relative;
     border-radius: 10px;
     font-size: 13px;
@@ -243,7 +243,7 @@ td {
     height: 3em;
     border: solid 1px rgb(126, 139, 0);
     padding: 5px;
-    background-color: rgb(171, 173, 48);
+    background-color: rgba(171, 173, 48, 0.8);
     position: relative;
     border-radius: 10px;
     font-size: 13px;
@@ -256,7 +256,7 @@ td {
     height: 3em;
     border: solid 1px rgb(102, 25, 121);
     padding: 5px;
-    background-color: rgb(133, 38, 177);
+    background-color: rgba(133, 38, 177, 0.8);
     position: relative;
     border-radius: 10px;
     font-size: 13px;
