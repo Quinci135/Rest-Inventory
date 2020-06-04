@@ -60,8 +60,8 @@ include_once 'config.php';
    $defaultBG = 'default.png';
 */
 $useBG = true;
-$rand = rand(1,3);
-$defaultBG = "backgrounds/$rand.jpg";
+$rand = rand(1,5);
+$defaultBG = "backgrounds/$rand.png";
 
 // Initial variable assignments
 $player['GET'] = null;
@@ -127,10 +127,21 @@ if ($response['status'] === "403") {
 
 $player['info'] = $response;
 
-// Check player is on server
-if(!isset($player['info']['items'])) {
+if(true){
+    if(!isset($player['info']['items'])) {
+        echo "Invalid Player";
+    }
+    else {
+        $background = $defaultBG;
+        include_once 'display_inv.php';
+    }
+}
+else {
+    // Check player is on server
+    if(!isset($player['info']['items'])) {
     echo 'Player is not on the server';
-} else {
+    } else {
     $background = $defaultBG;
     include_once 'display_inv.php';
+    }
 }

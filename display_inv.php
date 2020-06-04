@@ -11,13 +11,19 @@ if(!defined('index')) exit;
 include_once 'items_array.php';
 
 $body = "";
-$trash = array($response['items']['trash']);
-$inventory = array_merge($response['items']['inventory'], $response['items']['equipment'], $response['items']['dyes'], $response['items']['piggy'], $response['items']['safe'], $response['items']['forge'], $response['items']['vault'], $response['items']['miscEquip'], $response['items']['miscDye'], $trash);
+if($player['info']['online'] == 'false'){
+    $inventory = $response['items']['inventoryList'];
+}
+else{
+    $trash = array($response['items']['trash']);
+$inventory = array_merge($response['items']['inventory'], $response['items']['equipment'], $response['items']['dyes'], $response['items']['miscEquip'], $response['items']['miscDye'], $response['items']['piggy'], $response['items']['safe'], $trash, $response['items']['forge'], $response['items']['vault']);
+}
 
 
 $i = 0;
 foreach ($inventory as $item) {
-    if ($i > 259) {//88 dyes // 128 piggy // 168 safe // 208 forge // 248 vault // 253 equip // 258 miscDyes // 259 trash can slot
+    if ($i > 259) {//
+        //88 dyes // 128 piggy // 168 safe // 208 forge // 248 vault // 253 equip // 258 miscDyes // 259 trash can slot
 	break;
     }
     if ($item['netID'] !== 0) {
@@ -29,17 +35,17 @@ foreach ($inventory as $item) {
     }
 
     if ($i == 0) {
-        $body .= '<p id="title">Inventory</p>' . "\n\n";
+        $body .= '<p id="title">'. ($player['info']['online'] == 'false' ? 'Inventory (Offline)' : 'Inventory') .'</p>' . "\n\n";
         $body .= '<table id="inv_table"><tr>';
     }
 
     // For each slot in inventory with total 50 slots making up 10 columns and 5 rows
     // This is shorter than the previous 'if' used so I decided to use it instead of $i == 10 || $i == 20 etc.
     // The < 50 represents the max slots in inventory
-    if ($i % 10 === 0 && $i < 50) {
+    if ($i % 10 === 0 && (($i < 50) || $i > 179)) {
         $body .= '</tr><tr>';
     }
-    if (($i + 1) % 10 === 0 && $i > 89 && $i < 253) {
+    if (($i + 1) % 10 === 0 && $i > 89 && $i < 179) {
         $body .= '</tr><tr>';
     }
 
@@ -72,33 +78,33 @@ foreach ($inventory as $item) {
         $body .= '<span id="'. ($i === 69 ? 'Vanity' : 'Dye').'">'.($i === 69 ? 'Vanity' : 'Dye').'</span><table><tr>';
     }
 
-    if($i === 89) {
+    if($i === 99) {
         $body .= '</table></div><div id="Piggy_Bank_Table">';
         $body .= '<span id="Piggy">Piggy Bank</span><table><tr>';
     }
-    if($i === 129) {
+    if($i === 139) {
         $body .= '</table></div><div id="Safe_Table">';
         $body .= '<span id="Safe">Safe</span><table><tr>';
     }
-    if($i === 169) {
+    if($i === 180) {
         $body .= '</table></div><div id="DefendersForge_Table">';
         $body .= '<span id="Defenders_Forge">Defender\'s Forge</span><table><tr>';
     }
-    if($i === 209) {
+    if($i === 220) {
         $body .= '</table></div><div id="Vault_Table">';
         $body .= '<span id="Vault">Void Vault</span><table><tr>';
     }
-    if($i == 249 || $i == 254) {
-        $body .= '</tr></table></div>'."\n\n".'<div id="' . ($i === 249 ? 'Misc_Dye_Tables' : 'Misc_Equip_Tables') . '">';
-        $body .= '<span id="'. ($i === 249 ? 'Equip' : 'Dye').'">'.($i === 249 ? 'Equip' : 'Dye').'</span><table><tr>';
+    if($i == 89 || $i == 94) {
+        $body .= '</tr></table></div>'."\n\n".'<div id="' . ($i === 89 ? 'Misc_Equip_Tables' : 'Misc_Dye_Tables') . '">';
+        $body .= '<span id="'. ($i === 89 ? 'Equip' : 'Dye').'">'.($i === 89 ? 'Equip' : 'Dye').'</span><table><tr>';
     }
-    if ($i == 259) {
+    if ($i == 179) {
         $body .= '</table></div><div id="Trash_Table">';
         $body .= '<table><tr>';
     }
     // The last table has only 1 row per table so we close the current row
     // and open a new one here.
-    if($i > 59 && ($i < 89 || $i > 248)) {
+    if($i > 59 && $i < 99) {
         $body .= '</tr><tr>';
     }
 
@@ -106,7 +112,7 @@ foreach ($inventory as $item) {
     if ($item['netID'] == 0) {
         if ($i === 58) {
         } 
-        elseif (($i > 78 && $i < 89) || ($i > 253 && $i < 259)) {
+        elseif (($i > 78 && $i < 89) || ($i > 93 && $i < 99)) {
             $img_tag = '<img title="Dye Slot" src="items_images/Dye_Empty.png"/>';
             $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
         }
@@ -119,7 +125,7 @@ foreach ($inventory as $item) {
             $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
             
         }
-        elseif (($i > 58 && $i < 62) || ($i > 68 && $i < 72) || ($i > 248 && $i < 254) || $i == 259) {
+        elseif (($i > 58 && $i < 79) || ($i > 88 && $i < 94) || $i == 179) {
             $itemFile = str_replace(' ', '_', $slotNames[$i] . '.png');
             $img_tag = '<img title="'. $slotNames[$i] . ' "src="items_images/' . $itemFile . '"/>';
             $body .= '<td><div class="item"></div><div class="item2"><div class="img emptySlot">' . $img_tag . '</div>';
@@ -149,26 +155,37 @@ $body .= '</tr></table></div>';
 
 $body .= '<div id="Buffs">Buffs</div><div id="Buff_table">';
 
-// Display buffs
-$buffs = explode(', ', $player['info']['buffs']);
-$i = 0;
-foreach($buffs as $buff) {
+if($player['info']['online'] == 'true'){
+    // Display buffs
+    $buffs = explode(', ', $player['info']['buffs']);
+    $i = 0;
+    foreach($buffs as $buff) {
     if($buff > 0) {
         $body .= '<div class="buffImg"><img src="items_images/Buff_'.$buff.'.png" /></div>';
         $i++;
     }
 }
 $body .= '</div>';
+}
+
 // Display Player Name
 if ($config['display_playername'])
     $body .= '<div id="PlayerName">Player Name: <em>' . $player['info']['nickname'] . '</em></div>';
 // Display Account Name
-if ($config['display_accountname'])
-$body .= '<div id="AccountName">Account Name: <em>' . $player['info']['username'] . '</em></div>';
-
+if ($config['display_accountname']) {
+$accountName = $player['info']['username'];
+if ($player['info']['username'] == "" ) {$accountName = "Player not logged in.";}
+$body .= '<div id="AccountName">Account Name: <em>' . $accountName . '</em></div>';
+}
 // Display Player Position
-if ($config['display_position'])
+if ($player['info']['online'] == 'true') {
+    if ($config['display_position'])
 $body .= '<div id="Position">Position: <em>'.$player['info']['position'].'</em></div>';
+}
+else {
+    $body .= '<div id="Position">Player is offline</em></div>';
+}
+
 
 // Display Player Group
 if ($config['display_group'])

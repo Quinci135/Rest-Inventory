@@ -128,18 +128,20 @@ body {
     padding: 12px;
 }
 #Misc_Dye_Tables {
-    margin-top: -500px;
+    position: absolute;
+    margin-top: 650px;
     margin-bottom: 5px;
-    margin-right: 45px;
+    right: 105px;
     float: right;
     color: #fff;
     padding: 5px;
     text-align: center;
 }
 #Misc_Equip_Tables {
-    margin-top: -500px;
+    position: absolute;
+    margin-top: 650px;
     margin-bottom: 5px;
-    margin-right: 105px;
+    right: 45px;
     float: right;
     color: #fff;
     padding: 5px;
@@ -147,8 +149,8 @@ body {
     text-align: center;
 }
 #Trash_Table {
-    margin-top: -857px;
-    margin-left: -40px;
+    margin-top: -325px;
+    margin-left: -6px;
     float: left;
 }
 #Buffs {
